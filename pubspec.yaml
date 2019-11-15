@@ -1,7 +1,5 @@
 name: google_sign_in_mocks
-description: Mocks for Google Sign In. Use this
-package with `firebase_auth_mocks` to write unit tests involving Firebase
-Authentication.
+description: Mocks for Google Sign In. Use this package with `firebase_auth_mocks` to write unit tests involving Firebase Authentication.
 version: 0.1.0+2
 homepage: http://blog.wafrat.com
 repository: https://github.com/atn832/google_sign_in_mocks
