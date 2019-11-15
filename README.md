@@ -1,4 +1,6 @@
-Mocks for [google_sign_in](https://pub.dev/packages/google_sign_in).
+Mocks for [google_sign_in](https://pub.dev/packages/google_sign_in). Use this
+package with `firebase_auth_mocks` to write unit tests involving Firebase
+Authentication.
 
 ## Usage
 
