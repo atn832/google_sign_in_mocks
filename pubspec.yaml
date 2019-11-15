@@ -1,6 +1,6 @@
 name: google_sign_in_mocks
 description: Mocks for Google Sign In.
-version: 0.1.0
+version: 0.1.0+1
 homepage: http://blog.wafrat.com
 repository: https://github.com/atn832/google_sign_in_mocks
 
