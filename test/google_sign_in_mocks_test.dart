@@ -7,6 +7,7 @@ void main() {
     final signInAccount = await googleSignIn.signIn();
     final signInAuthentication = await signInAccount.authentication;
     expect(signInAuthentication, isNotNull);
+    expect(googleSignIn.currentUser, isNotNull);
     expect(signInAuthentication.accessToken, isNotNull);
     expect(signInAuthentication.idToken, isNotNull);
   });
