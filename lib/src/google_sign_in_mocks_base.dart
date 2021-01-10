@@ -15,4 +15,10 @@ class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {
 }
 
 class MockGoogleSignInAuthentication extends Mock
-    implements GoogleSignInAuthentication {}
+    implements GoogleSignInAuthentication {
+  @override
+  String get idToken => 'idToken';
+
+  @override
+  String get accessToken => 'accessToken';
+}
