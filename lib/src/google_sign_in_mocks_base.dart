@@ -4,13 +4,22 @@ import 'package:mockito/mockito.dart';
 class MockGoogleSignIn extends Mock implements GoogleSignIn {
   MockGoogleSignInAccount _currentUser;
 
+  /// To simulate google login cancellation behaviour.
+  bool _isCancelled = false;
+
+
+  void setIsCancelled(bool val) {
+    _isCancelled = val;
+  }
   @override
   GoogleSignInAccount get currentUser => _currentUser;
 
   @override
   Future<GoogleSignInAccount> signIn() {
     _currentUser = MockGoogleSignInAccount();
-    return Future.value(_currentUser);
+    final returnVal = _isCancelled ? Future.value(null) : Future.value(_currentUser);
+    _isCancelled = false;
+    return returnVal;
   }
 }
 
