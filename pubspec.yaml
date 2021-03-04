@@ -5,13 +5,13 @@ homepage: http://blog.wafrat.com
 repository: https://github.com/atn832/google_sign_in_mocks
 
 environment:
-  sdk: '>=2.2.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  google_sign_in: ^4.0.11
-  mockito: ^4.1.0
+  google_sign_in: ^5.0.0
+  mockito: ^5.0.0
 
 dev_dependencies:
   flutter_test:

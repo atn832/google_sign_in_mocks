@@ -2,10 +2,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mockito/mockito.dart';
 
 class MockGoogleSignIn extends Mock implements GoogleSignIn {
-  MockGoogleSignInAccount _currentUser;
+  MockGoogleSignInAccount? _currentUser;
 
   @override
-  GoogleSignInAccount get currentUser => _currentUser;
+  GoogleSignInAccount? get currentUser => _currentUser;
 
   @override
   Future<GoogleSignInAccount> signIn() {
@@ -18,6 +18,13 @@ class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {
   @override
   Future<GoogleSignInAuthentication> get authentication =>
       Future.value(MockGoogleSignInAuthentication());
+
+  @override
+  bool operator ==(other) {
+    return (other is Mock)
+        ? hashCode == other.hashCode
+        : identical(this, other);
+  }
 }
 
 class MockGoogleSignInAuthentication extends Mock
