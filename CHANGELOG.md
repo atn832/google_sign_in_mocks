@@ -1,4 +1,4 @@
-# 0.2.0
+## 0.2.0
 
 - Migrated to null safety. Thank you [bsutton](https://github.com/bsutton)!
 
