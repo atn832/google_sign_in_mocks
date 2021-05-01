@@ -17,10 +17,8 @@ class MockGoogleSignIn extends Mock implements GoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
     _currentUser = MockGoogleSignInAccount();
-    final returnVal = _isCancelled ? Future.value(null) : Future.value(_currentUser);
-    // [_isCancelled] is set back to false so to not affect other tests.
-    _isCancelled = false;
-    return returnVal;
+     return _isCancelled ? Future.value(null) : Future.value(_currentUser);
+    
   }
 }
 
@@ -31,13 +29,9 @@ class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {
 
   @override
   bool operator ==(other) {
-    if (identical(this, other)) return true;
-    if (other is! GoogleSignInAccount) return false;
-    final otherAccount = other;
-    return displayName == otherAccount.displayName &&
-        email == otherAccount.email &&
-        id == otherAccount.id &&
-        photoUrl == otherAccount.photoUrl;
+    return (other is Mock)
+        ? hashCode == other.hashCode
+        : identical(this, other);
   }
 }
 
