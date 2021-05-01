@@ -12,7 +12,7 @@ import 'package:test/test.dart';
 
 void main() {
   late MockGoogleSignIn googleSignIn;
-  setUpAll((){
+  setUp(() {
     googleSignIn = MockGoogleSignIn();
   });
 
@@ -25,18 +25,21 @@ void main() {
     expect(signInAuthentication.idToken, isNotNull);
   });
 
-  test('should return null when google login is cancelled by the user', () async {
+  test('should return null when google login is cancelled by the user',
+      () async {
     googleSignIn.setIsCancelled(true);
     final signInAccount = await googleSignIn.signIn();
     expect(signInAccount, isNull);
   });
-
-  test('shouldn\'t return null when google login is cancelled by the user', () async {
+  test('testing google login twice, once cancelled, once not cancelled at the same test.', () async {
+   googleSignIn.setIsCancelled(true);
     final signInAccount = await googleSignIn.signIn();
-    expect(signInAccount, isNotNull);
+    expect(signInAccount, isNull);
+    googleSignIn.setIsCancelled(false);
+    final signInAccountSecondAttempt = await googleSignIn.signIn();
+    expect(signInAccountSecondAttempt, isNotNull);
   });
 }
-
 ```
 
 ## Features and bugs
