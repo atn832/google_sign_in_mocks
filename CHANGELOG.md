@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Added setIsCanceled to simulate canceled. Thank you [YusufAbdelaziz](https://github.com/YusufAbdelaziz)!
+
 ## 0.2.0
 
 - Migrated to null safety. Thank you [bsutton](https://github.com/bsutton)!
