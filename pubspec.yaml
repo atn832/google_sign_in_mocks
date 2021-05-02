@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_sign_in: ^5.0.0
-  mockito: ^5.0.0
+  google_sign_in: ^5.0.2
+  mockito: ^5.0.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  pedantic: ^1.0.0
+  pedantic: ^1.11.0
   test: ^1.0.0
