@@ -17,7 +17,14 @@ class MockGoogleSignIn extends Mock implements GoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
     _currentUser = MockGoogleSignInAccount();
-     return Future.value(_isCancelled ? null : _currentUser);
+    return Future.value(_isCancelled ? null : _currentUser);
+  }
+
+  @override
+  Future<GoogleSignInAccount?> signOut() {
+    final currentUser = _currentUser;
+    _currentUser = null;
+    return Future.value(_isCancelled ? null : currentUser);
   }
 }
 
@@ -34,7 +41,8 @@ class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {
   }
 }
 
-class MockGoogleSignInAuthentication extends Mock implements GoogleSignInAuthentication {
+class MockGoogleSignInAuthentication extends Mock
+    implements GoogleSignInAuthentication {
   @override
   String get idToken => 'idToken';
 
