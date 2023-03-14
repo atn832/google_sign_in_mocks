@@ -2,6 +2,10 @@ Mocks for [google_sign_in](https://pub.dev/packages/google_sign_in). Use this
 package with `firebase_auth_mocks` to write unit tests involving Firebase
 Authentication.
 
+[![pub package](https://img.shields.io/pub/v/google_sign_in_mocks.svg)](https://pub.dartlang.org/packages/google_sign_in_mocks)
+[![unit-tests](https://github.com/atn832/google_sign_in_mocks/actions/workflows/unit-tests.yaml/badge.svg)](https://github.com/atn832/google_sign_in_mocks/actions/workflows/unit-tests.yaml)
+<a href="https://www.buymeacoffee.com/anhtuann" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="30px" width= "108px"></a>
+
 ## Usage
 
 A simple usage example:

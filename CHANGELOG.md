@@ -1,6 +1,6 @@
 ## 0.2.2
 
-- Removed dependency to Mockito.
+- Removed dependency to Mockito ([8b7309e](https://github.com/atn832/google_sign_in_mocks/commit/8b7309eec4cfb2c799772f7f25eb4c26b397bb9c)).
 
 ## 0.2.1
 
