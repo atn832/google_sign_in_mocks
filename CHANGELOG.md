@@ -1,3 +1,7 @@
+## 0.2.2
+
+- Removed dependency to Mockito.
+
 ## 0.2.1
 
 - Added setIsCanceled to simulate canceled. Thank you [YusufAbdelaziz](https://github.com/YusufAbdelaziz)!

@@ -1,7 +1,6 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mockito/mockito.dart';
 
-class MockGoogleSignIn extends Mock implements GoogleSignIn {
+class MockGoogleSignIn implements GoogleSignIn {
   MockGoogleSignInAccount? _currentUser;
 
   bool _isCancelled = false;
@@ -17,27 +16,29 @@ class MockGoogleSignIn extends Mock implements GoogleSignIn {
   @override
   Future<GoogleSignInAccount?> signIn() {
     _currentUser = MockGoogleSignInAccount();
-     return Future.value(_isCancelled ? null : _currentUser);
+    return Future.value(_isCancelled ? null : _currentUser);
   }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class MockGoogleSignInAccount extends Mock implements GoogleSignInAccount {
+class MockGoogleSignInAccount implements GoogleSignInAccount {
   @override
   Future<GoogleSignInAuthentication> get authentication =>
       Future.value(MockGoogleSignInAuthentication());
 
   @override
-  bool operator ==(other) {
-    return (other is Mock)
-        ? hashCode == other.hashCode
-        : identical(this, other);
-  }
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class MockGoogleSignInAuthentication extends Mock implements GoogleSignInAuthentication {
+class MockGoogleSignInAuthentication implements GoogleSignInAuthentication {
   @override
   String get idToken => 'idToken';
 
   @override
   String get accessToken => 'accessToken';
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
