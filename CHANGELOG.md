@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Updated dependency to google_signin 6.1.2. Thank you [MedwinCorreo](https://github.com/atn832/google_sign_in_mocks/pull/8)!
+
 ## 0.2.2
 
 - Removed dependency to Mockito ([8b7309e](https://github.com/atn832/google_sign_in_mocks/commit/8b7309eec4cfb2c799772f7f25eb4c26b397bb9c)).
