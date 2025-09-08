@@ -11,12 +11,13 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   @override
-  GoogleSignInAccount? get currentUser => _currentUser;
-
-  @override
-  Future<GoogleSignInAccount?> signIn() {
+  Future<GoogleSignInAccount> authenticate(
+      {List<String> scopeHint = const <String>[]}) {
     _currentUser = MockGoogleSignInAccount();
-    return Future.value(_isCancelled ? null : _currentUser);
+    if (_isCancelled) {
+      return Future.error('Cancelled');
+    }
+    return Future.value(_currentUser);
   }
 
   @override
@@ -25,8 +26,8 @@ class MockGoogleSignIn implements GoogleSignIn {
 
 class MockGoogleSignInAccount implements GoogleSignInAccount {
   @override
-  Future<GoogleSignInAuthentication> get authentication =>
-      Future.value(MockGoogleSignInAuthentication());
+  GoogleSignInAuthentication get authentication =>
+      MockGoogleSignInAuthentication();
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -35,9 +36,6 @@ class MockGoogleSignInAccount implements GoogleSignInAccount {
 class MockGoogleSignInAuthentication implements GoogleSignInAuthentication {
   @override
   String get idToken => 'idToken';
-
-  @override
-  String get accessToken => 'accessToken';
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);

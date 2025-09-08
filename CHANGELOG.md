@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Updated dependency to google_signin 7.0.0.
+
 ## 0.3.0
 
 - Updated dependency to google_signin 6.1.2. Thank you [MedwinCorreo](https://github.com/atn832/google_sign_in_mocks/pull/8)!
