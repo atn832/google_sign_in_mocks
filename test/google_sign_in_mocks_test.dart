@@ -8,27 +8,28 @@ void main() {
   });
 
   test('should return idToken and accessToken when authenticating', () async {
-    final signInAccount = await googleSignIn.signIn();
-    final signInAuthentication = await signInAccount!.authentication;
+    final signInAccount = await googleSignIn.authenticate();
+    final signInAuthentication = signInAccount.authentication;
     expect(signInAuthentication, isNotNull);
-    expect(googleSignIn.currentUser, isNotNull);
     expect(signInAuthentication.idToken, isNotNull);
   });
 
-  test('should return null when google login is cancelled by the user',
+  test('should cancel the Future when google login is cancelled by the user',
       () async {
     googleSignIn.setIsCancelled(true);
-    final signInAccount = await googleSignIn.signIn();
-    expect(signInAccount, isNull);
+    expect(() {
+      return googleSignIn.authenticate();
+    }, throwsA('Cancelled'));
   });
   test(
       'testing google login twice, once cancelled, once not cancelled at the same test.',
       () async {
     googleSignIn.setIsCancelled(true);
-    final signInAccount = await googleSignIn.signIn();
-    expect(signInAccount, isNull);
+    expect(() {
+      return googleSignIn.authenticate();
+    }, throwsA('Cancelled'));
     googleSignIn.setIsCancelled(false);
-    final signInAccountSecondAttempt = await googleSignIn.signIn();
+    final signInAccountSecondAttempt = await googleSignIn.authenticate();
     expect(signInAccountSecondAttempt, isNotNull);
   });
 }

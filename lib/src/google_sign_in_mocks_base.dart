@@ -11,12 +11,13 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   @override
-  GoogleSignInAccount? get currentUser => _currentUser;
-
-  @override
-  Future<GoogleSignInAccount?> signIn() {
+  Future<GoogleSignInAccount> authenticate(
+      {List<String> scopeHint = const <String>[]}) {
     _currentUser = MockGoogleSignInAccount();
-    return Future.value(_isCancelled ? null : _currentUser);
+    if (_isCancelled) {
+      return Future.error('Cancelled');
+    }
+    return Future.value(_currentUser);
   }
 
   @override
