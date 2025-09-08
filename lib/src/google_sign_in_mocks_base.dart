@@ -25,8 +25,8 @@ class MockGoogleSignIn implements GoogleSignIn {
 
 class MockGoogleSignInAccount implements GoogleSignInAccount {
   @override
-  Future<GoogleSignInAuthentication> get authentication =>
-      Future.value(MockGoogleSignInAuthentication());
+  GoogleSignInAuthentication get authentication =>
+      MockGoogleSignInAuthentication();
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -35,9 +35,6 @@ class MockGoogleSignInAccount implements GoogleSignInAccount {
 class MockGoogleSignInAuthentication implements GoogleSignInAuthentication {
   @override
   String get idToken => 'idToken';
-
-  @override
-  String get accessToken => 'accessToken';
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
