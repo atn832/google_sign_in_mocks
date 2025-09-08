@@ -1,6 +1,7 @@
 ## 0.4.1
 
 - Implemented `initialize` ([PR-12](https://github.com/atn832/google_sign_in_mocks/pull/12)).
+- Implemented `authenticationEvents` stream ([PR-13](https://github.com/atn832/google_sign_in_mocks/pull/13)).
 
 ## 0.4.0+1
 
