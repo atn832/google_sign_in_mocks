@@ -21,6 +21,15 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   @override
+  Future<void> initialize(
+      {String? clientId,
+      String? serverClientId,
+      String? nonce,
+      String? hostedDomain}) {
+    return Future.value();
+  }
+
+  @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 

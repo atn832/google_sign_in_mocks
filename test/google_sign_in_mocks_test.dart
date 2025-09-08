@@ -7,6 +7,11 @@ void main() {
     googleSignIn = MockGoogleSignIn();
   });
 
+  test('initializes', () async {
+    expect(
+        () => googleSignIn.initialize(clientId: 'client id'), returnsNormally);
+  });
+
   test('should return idToken when authenticating', () async {
     final signInAccount = await googleSignIn.authenticate();
     final signInAuthentication = signInAccount.authentication;

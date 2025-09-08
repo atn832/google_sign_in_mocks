@@ -1,3 +1,7 @@
+## 0.4.1
+
+- Implement initialize.
+
 ## 0.4.0+1
 
 - Updated dependency to google_signin 7.0.0 ([PR-11](https://github.com/atn832/google_sign_in_mocks/pull/11)).
