@@ -1,6 +1,6 @@
 ## 0.4.1
 
-- Implement initialize.
+- Implemented `initialize` ([PR-12](https://github.com/atn832/google_sign_in_mocks/pull/12)).
 
 ## 0.4.0+1
 
