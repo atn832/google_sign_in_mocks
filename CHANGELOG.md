@@ -2,6 +2,8 @@
 
 - Implemented `initialize` ([PR-12](https://github.com/atn832/google_sign_in_mocks/pull/12)).
 - Implemented `authenticationEvents` stream ([PR-13](https://github.com/atn832/google_sign_in_mocks/pull/13)).
+- Implemented `signInSilently`, `signOut`, `disconnect`. Thank you [jibbers42](https://github.com/jibbers42)! [PR-9](https://github.com/atn832/google_sign_in_mocks/pull/9/)
+- Refactored `signInSilently` into `attemptLightweightAuthentication`. ([PR-14](https://github.com/atn832/google_sign_in_mocks/pull/14)).
 
 ## 0.4.0+1
 

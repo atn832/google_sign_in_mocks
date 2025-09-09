@@ -15,7 +15,7 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   /// Used to simulate user already being signed in to google.
-  void enableSilentSignIn() {
+  void enableLightweightAuthentication() {
     _currentUser = MockGoogleSignInAccount();
   }
 
@@ -42,10 +42,12 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   @override
-  Future<GoogleSignInAccount?> signInSilently({
-    bool suppressErrors = true,
-    bool reAuthenticate = false,
-  }) {
+  Future<GoogleSignInAccount?>? attemptLightweightAuthentication(
+      {bool reportAllExceptions = false}) {
+    if (_currentUser != null) {
+      _authEventController
+          .add(GoogleSignInAuthenticationEventSignIn(user: _currentUser!));
+    }
     return Future.value(_currentUser);
   }
 
@@ -61,6 +63,7 @@ class MockGoogleSignIn implements GoogleSignIn {
     return Future.value(null);
   }
 
+  @override
   Stream<GoogleSignInAuthenticationEvent> get authenticationEvents =>
       _authEventController.stream;
 
