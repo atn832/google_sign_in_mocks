@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:google_sign_in/google_sign_in.dart';
 
 class MockGoogleSignIn implements GoogleSignIn {
   MockGoogleSignInAccount? _currentUser;
+  final StreamController<GoogleSignInAuthenticationEvent> _authEventController =
+      StreamController<GoogleSignInAuthenticationEvent>.broadcast();
 
   bool _isCancelled = false;
 
@@ -16,12 +20,25 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   @override
-  GoogleSignInAccount? get currentUser => _currentUser;
+  Future<GoogleSignInAccount> authenticate(
+      {List<String> scopeHint = const <String>[]}) {
+    _currentUser = MockGoogleSignInAccount();
+    if (_isCancelled) {
+      _authEventController.addError('Cancelled');
+      return Future.error('Cancelled');
+    }
+    _authEventController
+        .add(GoogleSignInAuthenticationEventSignIn(user: _currentUser!));
+    return Future.value(_currentUser);
+  }
 
   @override
-  Future<GoogleSignInAccount?> signIn() {
-    _currentUser = MockGoogleSignInAccount();
-    return Future.value(_isCancelled ? null : _currentUser);
+  Future<void> initialize(
+      {String? clientId,
+      String? serverClientId,
+      String? nonce,
+      String? hostedDomain}) {
+    return Future.value();
   }
 
   @override
@@ -44,14 +61,17 @@ class MockGoogleSignIn implements GoogleSignIn {
     return Future.value(null);
   }
 
+  Stream<GoogleSignInAuthenticationEvent> get authenticationEvents =>
+      _authEventController.stream;
+
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class MockGoogleSignInAccount implements GoogleSignInAccount {
   @override
-  Future<GoogleSignInAuthentication> get authentication =>
-      Future.value(MockGoogleSignInAuthentication());
+  GoogleSignInAuthentication get authentication =>
+      MockGoogleSignInAuthentication();
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
@@ -60,9 +80,6 @@ class MockGoogleSignInAccount implements GoogleSignInAccount {
 class MockGoogleSignInAuthentication implements GoogleSignInAuthentication {
   @override
   String get idToken => 'idToken';
-
-  @override
-  String get accessToken => 'accessToken';
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);

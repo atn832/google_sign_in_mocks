@@ -1,3 +1,12 @@
+## 0.4.1
+
+- Implemented `initialize` ([PR-12](https://github.com/atn832/google_sign_in_mocks/pull/12)).
+- Implemented `authenticationEvents` stream ([PR-13](https://github.com/atn832/google_sign_in_mocks/pull/13)).
+
+## 0.4.0+1
+
+- Updated dependency to google_signin 7.0.0 ([PR-11](https://github.com/atn832/google_sign_in_mocks/pull/11)).
+
 ## 0.3.0
 
 - Updated dependency to google_signin 6.1.2. Thank you [MedwinCorreo](https://github.com/atn832/google_sign_in_mocks/pull/8)!
