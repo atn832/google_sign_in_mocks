@@ -71,36 +71,42 @@ void main() {
     expect(signInAccountSecondAttempt, isNotNull);
   });
 
-  test('signInSilently should return user when user is already signed in',
+  test(
+      'attemptLightweightAuthentication should return user when user is already signed in',
       () async {
-    final signInAccount = await googleSignIn.signIn();
-    final silentSignInAccount = await googleSignIn.signInSilently();
+    final signInAccount = await googleSignIn.authenticate();
+    final silentSignInAccount =
+        await googleSignIn.attemptLightweightAuthentication();
     expect(silentSignInAccount, isNotNull);
     expect(silentSignInAccount, equals(signInAccount));
   });
 
-  test('signInSilently should return user after calling enableSilentSignIn',
+  test(
+      'attemptLightweightAuthentication should return user after calling enableLightweightAuthentication',
       () async {
-    googleSignIn.enableSilentSignIn();
-    final silentSignInAccount = await googleSignIn.signInSilently();
+    googleSignIn.enableLightweightAuthentication();
+    final silentSignInAccount =
+        await googleSignIn.attemptLightweightAuthentication();
     expect(silentSignInAccount, isNotNull);
   });
 
-  test('signInSilently should return null when user is not signed in',
+  test(
+      'attemptLightweightAuthentication should return null when user is not signed in',
       () async {
-    final silentSignInAccount = await googleSignIn.signInSilently();
+    final silentSignInAccount =
+        await googleSignIn.attemptLightweightAuthentication();
     expect(silentSignInAccount, isNull);
   });
 
   test('signOut should return null when user is signed out', () async {
-    final signInAccount = await googleSignIn.signIn();
+    final signInAccount = await googleSignIn.authenticate();
     expect(signInAccount, isNotNull);
     final signOutAccount = await googleSignIn.signOut();
     expect(signOutAccount, isNull);
   });
 
   test('disconnect should return null when user is disconnected', () async {
-    final signInAccount = await googleSignIn.signIn();
+    final signInAccount = await googleSignIn.authenticate();
     expect(signInAccount, isNotNull);
     final disconnectAccount = await googleSignIn.disconnect();
     expect(disconnectAccount, isNull);
