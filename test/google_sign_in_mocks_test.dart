@@ -57,9 +57,11 @@ void main() {
       return googleSignIn.authenticate();
     }, throwsA('Cancelled'));
   });
+
   test(
-      'testing google login twice, once cancelled, once not cancelled at the same test.',
+      'testing signIn twice, once cancelled, once not cancelled at the same test.',
       () async {
+    googleSignIn.setIsCancelled(true);
     googleSignIn.setIsCancelled(true);
     expect(() {
       return googleSignIn.authenticate();
@@ -67,5 +69,40 @@ void main() {
     googleSignIn.setIsCancelled(false);
     final signInAccountSecondAttempt = await googleSignIn.authenticate();
     expect(signInAccountSecondAttempt, isNotNull);
+  });
+
+  test('signInSilently should return user when user is already signed in',
+      () async {
+    final signInAccount = await googleSignIn.signIn();
+    final silentSignInAccount = await googleSignIn.signInSilently();
+    expect(silentSignInAccount, isNotNull);
+    expect(silentSignInAccount, equals(signInAccount));
+  });
+
+  test('signInSilently should return user after calling enableSilentSignIn',
+      () async {
+    googleSignIn.enableSilentSignIn();
+    final silentSignInAccount = await googleSignIn.signInSilently();
+    expect(silentSignInAccount, isNotNull);
+  });
+
+  test('signInSilently should return null when user is not signed in',
+      () async {
+    final silentSignInAccount = await googleSignIn.signInSilently();
+    expect(silentSignInAccount, isNull);
+  });
+
+  test('signOut should return null when user is signed out', () async {
+    final signInAccount = await googleSignIn.signIn();
+    expect(signInAccount, isNotNull);
+    final signOutAccount = await googleSignIn.signOut();
+    expect(signOutAccount, isNull);
+  });
+
+  test('disconnect should return null when user is disconnected', () async {
+    final signInAccount = await googleSignIn.signIn();
+    expect(signInAccount, isNotNull);
+    final disconnectAccount = await googleSignIn.disconnect();
+    expect(disconnectAccount, isNull);
   });
 }

@@ -14,6 +14,11 @@ class MockGoogleSignIn implements GoogleSignIn {
     _isCancelled = val;
   }
 
+  /// Used to simulate user already being signed in to google.
+  void enableSilentSignIn() {
+    _currentUser = MockGoogleSignInAccount();
+  }
+
   @override
   Future<GoogleSignInAccount> authenticate(
       {List<String> scopeHint = const <String>[]}) {
@@ -37,6 +42,25 @@ class MockGoogleSignIn implements GoogleSignIn {
   }
 
   @override
+  Future<GoogleSignInAccount?> signInSilently({
+    bool suppressErrors = true,
+    bool reAuthenticate = false,
+  }) {
+    return Future.value(_currentUser);
+  }
+
+  @override
+  Future<GoogleSignInAccount?> signOut() {
+    _currentUser = null;
+    return Future.value(null);
+  }
+
+  @override
+  Future<GoogleSignInAccount?> disconnect() {
+    _currentUser = null;
+    return Future.value(null);
+  }
+
   Stream<GoogleSignInAuthenticationEvent> get authenticationEvents =>
       _authEventController.stream;
 
