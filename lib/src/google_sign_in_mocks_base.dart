@@ -24,8 +24,12 @@ class MockGoogleSignIn implements GoogleSignIn {
       {List<String> scopeHint = const <String>[]}) {
     _currentUser = MockGoogleSignInAccount();
     if (_isCancelled) {
-      _authEventController.addError('Cancelled');
-      return Future.error('Cancelled');
+      _authEventController.addError(
+        GoogleSignInException(code: GoogleSignInExceptionCode.canceled),
+      );
+      return Future.error(
+        GoogleSignInException(code: GoogleSignInExceptionCode.canceled),
+      );
     }
     _authEventController
         .add(GoogleSignInAuthenticationEventSignIn(user: _currentUser!));
