@@ -130,4 +130,176 @@ void main() {
     final disconnectAccount = await googleSignIn.disconnect();
     expect(disconnectAccount, isNull);
   });
+
+  group('setException', () {
+    const expectedException = GoogleSignInException(
+      code: GoogleSignInExceptionCode.unknownError,
+    );
+
+    setUp(() {
+      googleSignIn.setException(expectedException);
+    });
+
+    test(
+      'authenticate should throws GoogleSignInException '
+      'when setException is called before',
+      () {
+        expect(
+          () => googleSignIn.authenticate(),
+          throwsA(isA<GoogleSignInException>().having(
+            (e) => e.code,
+            'code',
+            expectedException.code,
+          )),
+        );
+      },
+    );
+
+    test(
+      'autheticationEvents emits GoogleSignInException '
+      'on authenticate when setException is called before',
+      () async {
+        final errors = [];
+        final subscription = googleSignIn.authenticationEvents.listen(
+          null,
+          onError: errors.add,
+        );
+        final exceptionMatcher = isA<GoogleSignInException>().having(
+          (e) => e.code,
+          'code',
+          expectedException.code,
+        );
+        expect(
+          () => googleSignIn.authenticate(),
+          throwsA(exceptionMatcher),
+        );
+
+        // Allow event loop to process (necessary).
+        await Future.delayed(Duration.zero);
+
+        expect(errors.length, 1);
+        expect(errors.first, exceptionMatcher);
+
+        await subscription.cancel();
+      },
+    );
+
+    test(
+      'initialize should throws GoogleSignInException '
+      'when setException is called before',
+      () {
+        expect(
+          () => googleSignIn.initialize(),
+          throwsA(isA<GoogleSignInException>().having(
+            (e) => e.code,
+            'code',
+            expectedException.code,
+          )),
+        );
+      },
+    );
+
+    test(
+      'autheticationEvents emits GoogleSignInException '
+      'on initialize when setException is called before',
+      () async {
+        final errors = [];
+        final subscription = googleSignIn.authenticationEvents.listen(
+          null,
+          onError: errors.add,
+        );
+        final exceptionMatcher = isA<GoogleSignInException>().having(
+          (e) => e.code,
+          'code',
+          expectedException.code,
+        );
+        expect(
+          () => googleSignIn.initialize(),
+          throwsA(exceptionMatcher),
+        );
+
+        // Allow event loop to process (necessary).
+        await Future.delayed(Duration.zero);
+
+        expect(errors.length, 1);
+        expect(errors.first, exceptionMatcher);
+
+        await subscription.cancel();
+      },
+    );
+
+    test(
+      'attemptLightweightAuthentication should throws GoogleSignInException '
+      'when setException is called before',
+      () {
+        expect(
+          () => googleSignIn.attemptLightweightAuthentication(),
+          throwsA(isA<GoogleSignInException>().having(
+            (e) => e.code,
+            'code',
+            expectedException.code,
+          )),
+        );
+      },
+    );
+
+    // https://github.com/flutter/packages/blob/b9e4c50d8d018040730e67bcd3d0d207e44dff67/packages/google_sign_in/google_sign_in/lib/google_sign_in.dart#L454
+    for (final ignoredCode in [
+      GoogleSignInExceptionCode.canceled,
+      GoogleSignInExceptionCode.interrupted,
+      GoogleSignInExceptionCode.uiUnavailable,
+    ]) {
+      test(
+        'attemptLightweightAuthentication should only throws GoogleSignInException '
+        'with code $ignoredCode '
+        'when reportAllExceptions is True '
+        'even when setException called before',
+        () {
+          googleSignIn.setException(GoogleSignInException(code: ignoredCode));
+          expect(
+            () => googleSignIn.attemptLightweightAuthentication(
+              reportAllExceptions: true,
+            ),
+            throwsA(isA<GoogleSignInException>()
+                .having((e) => e.code, 'code', ignoredCode)),
+          );
+          expect(
+            () => googleSignIn.attemptLightweightAuthentication(
+              reportAllExceptions: false,
+            ),
+            returnsNormally,
+          );
+        },
+      );
+    }
+
+    test(
+      'autheticationEvents emits GoogleSignInException '
+      'on attemptLightweightAuthentication when setException is called before',
+      () async {
+        final errors = [];
+        final subscription = googleSignIn.authenticationEvents.listen(
+          null,
+          onError: errors.add,
+        );
+        final exceptionMatcher = isA<GoogleSignInException>().having(
+          (e) => e.code,
+          'code',
+          expectedException.code,
+        );
+        expect(
+          () => googleSignIn.attemptLightweightAuthentication(),
+          throwsA(exceptionMatcher),
+        );
+
+        // Allow event loop to process (necessary).
+        await Future.delayed(Duration.zero);
+
+        expect(errors.length, 1);
+        expect(errors.first, exceptionMatcher);
+
+        await subscription.cancel();
+      },
+    );
+  });
 }
