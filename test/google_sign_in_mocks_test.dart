@@ -1,5 +1,6 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
+import 'package:mock_exceptions/mock_exceptions.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -130,4 +131,29 @@ void main() {
     final disconnectAccount = await googleSignIn.disconnect();
     expect(disconnectAccount, isNull);
   });
+
+  test('GoogleSignIn.authenticate throws exceptions', () async {
+    whenCalling(Invocation.method(
+      #authenticate,
+      null,
+    )).on(googleSignIn).thenThrow(
+          GoogleSignInException(code: GoogleSignInExceptionCode.unknownError),
+        );
+    expect(() => googleSignIn.authenticate(),
+        throwsA(isA<GoogleSignInException>()));
+  });
+
+  test(
+    'GoogleSignIn.authentiattemptLightweightAuthentication throws exceptions',
+    () async {
+      whenCalling(Invocation.method(
+        #attemptLightweightAuthentication,
+        null,
+      )).on(googleSignIn).thenThrow(
+            GoogleSignInException(code: GoogleSignInExceptionCode.unknownError),
+          );
+      expect(() => googleSignIn.attemptLightweightAuthentication(),
+          throwsA(isA<GoogleSignInException>()));
+    },
+  );
 }
