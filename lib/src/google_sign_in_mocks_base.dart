@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mock_exceptions/mock_exceptions.dart';
 
 class MockGoogleSignIn implements GoogleSignIn {
   MockGoogleSignInAccount? _currentUser;
@@ -22,6 +23,10 @@ class MockGoogleSignIn implements GoogleSignIn {
   @override
   Future<GoogleSignInAccount> authenticate(
       {List<String> scopeHint = const <String>[]}) {
+    maybeThrowException(
+      this,
+      Invocation.method(#authenticate, null, {#scopeHint: scopeHint}),
+    );
     _currentUser = MockGoogleSignInAccount();
     if (_isCancelled) {
       _authEventController.addError(
@@ -46,6 +51,14 @@ class MockGoogleSignIn implements GoogleSignIn {
   @override
   Future<GoogleSignInAccount?>? attemptLightweightAuthentication(
       {bool reportAllExceptions = false}) {
+    maybeThrowException(
+      this,
+      Invocation.method(
+        #attemptLightweightAuthentication,
+        null,
+        {#reportAllExceptions: reportAllExceptions},
+      ),
+    );
     if (_currentUser != null) {
       _authEventController
           .add(GoogleSignInAuthenticationEventSignIn(user: _currentUser!));
