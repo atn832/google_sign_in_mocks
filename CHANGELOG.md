@@ -1,3 +1,10 @@
+## 0.4.2
+
+Thank you for the changes [RDA-12](https://github.com/RDA-12)!
+
+- Throw a `GoogleSignInException` instead of a string when signin is canceled ([PR-17](https://github.com/atn832/google_sign_in_mocks/pull/17)).
+- Allow setting up exceptions in `authenticate` and `attemptLightweightAuthentication` ([PR-19](https://github.com/atn832/google_sign_in_mocks/pull/19)).
+
 ## 0.4.1
 
 - Implemented `initialize` ([PR-12](https://github.com/atn832/google_sign_in_mocks/pull/12)).
