@@ -26,20 +26,29 @@ void main() {
     await subscription.cancel();
   });
 
-  test('authenticationEvents emits error on cancelled authentication',
-      () async {
+  test(
+      'authenticationEvents emits GoogleSignInException with canceled code '
+      'on cancelled authentication', () async {
     final errors = [];
     final subscription =
         googleSignIn.authenticationEvents.listen(null, onError: errors.add);
 
     googleSignIn.setIsCancelled(true);
-    expect(() => googleSignIn.authenticate(), throwsA('Cancelled'));
+    final exceptionMatcher = isA<GoogleSignInException>().having(
+      (e) => e.code,
+      'code',
+      GoogleSignInExceptionCode.canceled,
+    );
+    expect(
+      () => googleSignIn.authenticate(),
+      throwsA(exceptionMatcher),
+    );
 
     // Allow event loop to process (necessary).
     await Future.delayed(Duration.zero);
 
     expect(errors.length, 1);
-    expect(errors.first, 'Cancelled');
+    expect(errors.first, exceptionMatcher);
     await subscription.cancel();
   });
 
@@ -53,9 +62,14 @@ void main() {
   test('should cancel the Future when google login is cancelled by the user',
       () async {
     googleSignIn.setIsCancelled(true);
-    expect(() {
-      return googleSignIn.authenticate();
-    }, throwsA('Cancelled'));
+    expect(
+      () => googleSignIn.authenticate(),
+      throwsA(isA<GoogleSignInException>().having(
+        (e) => e.code,
+        'code',
+        GoogleSignInExceptionCode.canceled,
+      )),
+    );
   });
 
   test(
@@ -63,9 +77,14 @@ void main() {
       () async {
     googleSignIn.setIsCancelled(true);
     googleSignIn.setIsCancelled(true);
-    expect(() {
-      return googleSignIn.authenticate();
-    }, throwsA('Cancelled'));
+    expect(
+      () => googleSignIn.authenticate(),
+      throwsA(isA<GoogleSignInException>().having(
+        (e) => e.code,
+        'code',
+        GoogleSignInExceptionCode.canceled,
+      )),
+    );
     googleSignIn.setIsCancelled(false);
     final signInAccountSecondAttempt = await googleSignIn.authenticate();
     expect(signInAccountSecondAttempt, isNotNull);
